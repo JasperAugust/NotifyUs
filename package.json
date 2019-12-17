@@ -1,0 +1,26 @@
+{
+  "name": "notifyus",
+  "version": "1.0.0",
+  "description": "A Simple map based reporting app that good citizens can use to report or suggest changes in their city.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "start": "concurrently \"cd backend && nodemon server.js\" \"cd client && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasperAugust/NotifyUs.git"
+  },
+  "keywords": [],
+  "author": "Jasper August Tootsi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JasperAugust/NotifyUs/issues"
+  },
+  "homepage": "https://github.com/JasperAugust/NotifyUs#readme",
+  "dependencies": {
+    "concurrently": "^5.0.1"
+  }
+}
