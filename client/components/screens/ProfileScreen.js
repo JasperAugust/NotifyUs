@@ -1,64 +1,76 @@
-import React from "react";
-import { View, Text, Button, StyleSheet, TextInput } from "react-native";
-import Amplify, { Auth } from "aws-amplify";
+import React, { Component } from "react";
+import { Image, Button, StyleSheet, Text, View } from 'react-native';
+import { AuthSession } from 'expo';
 
+const FB_APP_ID = '435729943774253';
 
-export default class ProfileScreen extends React.Component {
+export default class ProfileScreen extends Component {
   state = {
-    authCode: "",
+    userInfo: null,
+    isLoggedIn: false
   };
-  onChangeText(authCode) {
-    this.setState({ authCode });
-  }
-  signUp() {
-    Auth.signUp({
-      username: "yourcoolioemail@gmail.com",
-      password: "MyCoolP@ssword213!",
-      attributes: {
-        email: "yourcoolioemail@gmail.com"
-      }
-    })
-      .then(res => {
-        console.log("Successful signup: ", res);
-      })
-      .catch(err => {
-        console.log("Error signing up: ", err);
-      });
-  }
-  confirmUser() {
-    const { authCode } = this.state;
-    Auth.confirmSignUp("MyCoolUsername", authCode)
-      .then(res => {
-        console.log("Successful confirmation: ", res);
-      })
-      .catch(err => {
-        console.log("error confirming user: ", err);
-      });
-  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          placeholder="Confirmation code"
-          onChangeText={value => this.onChangeText(value)}
-          style={styles.input}
-        />
-        <Button title="Sign Up" onPress={this.signUp.bind(this)} />
-        <Button title="Log In" onPress={this.confirmUser.bind(this)} />
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        {!this.state.userInfo ? (
+          <Button title="Open FB Auth" onPress={this._handlePressAsync} />
+        ) : (
+          this._renderUserInfo()
+        )}
+        <Button title="Log out" onPress={this.handleLogOut}/>
       </View>
     );
   }
-}
-
-const styles = StyleSheet.create({
-  input: {
-    height: 50,
-    backgroundColor: "#ededed",
-    marginVertical: 10
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#F5FCFF"
+  handleLogOut = () => {
+    this.setState({isLoggedIn: false});
+    console.log(this.state.isLoggedIn);
   }
-});
+
+  _renderUserInfo = () => {
+    return (
+      <View style={{ alignItems: 'center' }}>
+        <Image
+          source={{ uri: this.state.userInfo.picture.data.url }}
+          style={{ width: 100, height: 100, borderRadius: 50 }}
+        />
+        <Text style={{ fontSize: 20 }}>{this.state.userInfo.name}</Text>
+        <Text>ID: {this.state.userInfo.id}</Text>
+      </View>
+    );
+  };
+
+  _handlePressAsync = async () => {
+    let redirectUrl = AuthSession.getRedirectUrl();
+    console.log({
+      redirectUrl
+    });
+
+    // NOTICE: Please do not actually request the token on the client (see:
+    // response_type=token in the authUrl), it is not secure. Request a code
+    // instead, and use this flow:
+    // https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/#confirm
+    // The code here is simplified for the sake of demonstration. If you are
+    // just prototyping then you don't need to concern yourself with this and
+    // can copy this example, but be aware that this is not safe in production.
+
+    let result = await AuthSession.startAsync({
+      authUrl:
+        `https://www.facebook.com/v2.8/dialog/oauth?response_type=token` +
+        `&client_id=${FB_APP_ID}` +
+        `&redirect_uri=${encodeURIComponent(redirectUrl)}`,
+    });
+
+    if (result.type !== 'success') {
+      alert('Uh oh, something went wrong');
+      return;
+    }
+
+    let accessToken = result.params.access_token;
+    let userInfoResponse = await fetch(
+      `https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,picture.type(large)`
+    );
+    const userInfo = await userInfoResponse.json();
+    this.setState({ userInfo, isLoggedIn: true });
+  };
+}
