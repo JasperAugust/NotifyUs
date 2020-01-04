@@ -13,7 +13,7 @@ export default class ProfileScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        {!this.state.userInfo ? (
+        {(!this.state.userInfo || !this.state.isLoggedIn) ? (
           <Button title="Open FB Auth" onPress={this._handlePressAsync} />
         ) : (
           this._renderUserInfo()
@@ -28,7 +28,9 @@ export default class ProfileScreen extends Component {
   }
 
   _renderUserInfo = () => {
+    
     return (
+      (!this.state.isLoggedIn) ? ( null) :(
       <View style={{ alignItems: 'center' }}>
         <Image
           source={{ uri: this.state.userInfo.picture.data.url }}
@@ -36,7 +38,7 @@ export default class ProfileScreen extends Component {
         />
         <Text style={{ fontSize: 20 }}>{this.state.userInfo.name}</Text>
         <Text>ID: {this.state.userInfo.id}</Text>
-      </View>
+      </View>)
     );
   };
 
@@ -45,8 +47,8 @@ export default class ProfileScreen extends Component {
     console.log({
       redirectUrl
     });
-
-    // NOTICE: Please do not actually request the token on the client (see:
+    //
+    // NB!!!: Please do not actually request the token on the client (see:
     // response_type=token in the authUrl), it is not secure. Request a code
     // instead, and use this flow:
     // https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/#confirm

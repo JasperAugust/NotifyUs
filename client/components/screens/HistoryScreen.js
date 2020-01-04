@@ -48,7 +48,7 @@ export default class HistoryScreen extends React.Component {
     fetchReports = () => {
         // todo instead of manually replacing the ip, implement middleware
         axios
-            .get("http://172.20.10.3:3000/reports")
+            .get("http://192.168.1.97:3000/reports")
             .then(({ data: reports }) => {
                 this.setState({ reports })
                 console.log("Report fetching was successful!");
@@ -116,7 +116,7 @@ export default class HistoryScreen extends React.Component {
 
     submitReport = () => {
         try {
-            fetch('http://localhost:3000/reports', {
+            fetch('http://192.168.1.97:3000/reports', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
