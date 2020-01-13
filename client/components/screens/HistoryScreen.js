@@ -16,6 +16,9 @@ import * as ImagePicker from 'expo-image-picker';
 import uuid from 'uuid';
 import { firebaseApp } from '../../services/config';
 
+import { actionCreators } from '../redux/actions.js';
+
+
 // import axios from '../services/axios'; Change!
 import axios from 'axios';
 
@@ -44,11 +47,15 @@ export default class HistoryScreen extends React.Component {
             this.setState({ loading: true, error: null, updated: false }, this.fetchReports);
         }
     }
+    
+    userReport = () => {
+        console.log(this.props.userInfo);
+    }
 
     fetchReports = () => {
         // todo instead of manually replacing the ip, implement middleware
         axios
-            .get("http://192.168.1.97:3000/reports")
+            .get("http://192.168.0.46:3000/reports")
             .then(({ data: reports }) => {
                 this.setState({ reports })
                 console.log("Report fetching was successful!");
@@ -106,7 +113,7 @@ export default class HistoryScreen extends React.Component {
                                 title='Pick an image from camera roll'
                                 onPress={this._pickImage}
                             />
-                            <Button title='Axios' onPress={this.submitReport} />
+                            <Button title='UserInfo' onPress={this.userReport} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -116,7 +123,7 @@ export default class HistoryScreen extends React.Component {
 
     submitReport = () => {
         try {
-            fetch('http://192.168.1.97:3000/reports', {
+            fetch('http://192.168.0.46:3000/reports', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

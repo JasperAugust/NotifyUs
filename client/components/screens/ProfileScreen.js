@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Image, Button, StyleSheet, Text, View } from 'react-native';
 import { AuthSession } from 'expo';
 
+import { actionCreators } from '../redux/actions'
+import store from "../redux/store";
+
+
 const FB_APP_ID = '435729943774253';
 
 export default class ProfileScreen extends Component {
@@ -9,6 +13,34 @@ export default class ProfileScreen extends Component {
     userInfo: null,
     isLoggedIn: false
   };
+
+  componentWillMount() {
+    const {store} = this.props
+
+    const {storeState} = store.getState()
+    this.setState({storeState.userInfo, storeState.isLoggedIn})
+
+    this.unsubscribe = store.subscribe(() => {
+      const {userInfo,isLoggedIn} = store.getState()
+      this.setState({userInfo,isLoggedIn})
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
+
+  onLogIn = (userInfo) => {
+    const {store} = this.props
+
+    store.dispatch(actionCreators.logIn(userInfo))
+  }
+
+  onLogOut = () => {
+    const {store} = this.props
+    console.log(this.state.isLoggedIn);
+    store.dispatch(actionCreators.logOut())
+  }
 
   render() {
     return (
@@ -18,14 +50,19 @@ export default class ProfileScreen extends Component {
         ) : (
           this._renderUserInfo()
         )}
-        <Button title="Log out" onPress={this.handleLogOut}/>
+        <Button title="Log out" onPress={this.onLogOut}/>
       </View>
     );
   }
   handleLogOut = () => {
     this.setState({isLoggedIn: false});
-    console.log(this.state.isLoggedIn);
   }
+
+  placeSubmitHandler = () => {
+    console.log("Submitted");	
+  }
+
+  
 
   _renderUserInfo = () => {
     
@@ -42,19 +79,18 @@ export default class ProfileScreen extends Component {
     );
   };
 
+  
+
   _handlePressAsync = async () => {
     let redirectUrl = AuthSession.getRedirectUrl();
     console.log({
       redirectUrl
     });
     //
-    // NB!!!: Please do not actually request the token on the client (see:
-    // response_type=token in the authUrl), it is not secure. Request a code
+    // NB!!!: NOT SAFE FOR PRODUCTION Request code
     // instead, and use this flow:
     // https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/#confirm
-    // The code here is simplified for the sake of demonstration. If you are
-    // just prototyping then you don't need to concern yourself with this and
-    // can copy this example, but be aware that this is not safe in production.
+  
 
     let result = await AuthSession.startAsync({
       authUrl:
@@ -74,5 +110,6 @@ export default class ProfileScreen extends Component {
     );
     const userInfo = await userInfoResponse.json();
     this.setState({ userInfo, isLoggedIn: true });
+    onLogIn(userInfo);
   };
 }
