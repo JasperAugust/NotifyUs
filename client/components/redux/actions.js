@@ -1,6 +1,6 @@
 import { LOG_IN, LOG_OUT } from "./types";
 
-logIn = () => {
+function logIn() {
     return {
         type: LOG_IN,
         payload:{
@@ -10,15 +10,12 @@ logIn = () => {
     };
 }
 
-logOut = () => {
+function logOut() {
     return {
-        type: LOG_IN,
-        payload:{
-            userInfo,
-            isLoggedIn
-        }
+        type: LOG_OUT
     };
 }
+
 const actionCreators = {
     logIn,
     logOut

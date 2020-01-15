@@ -10,9 +10,6 @@ const loginReducer = (state = initialState, action) => {
   switch(action.type) {
     case LOG_IN:
       return {
-          Object.assign({}, state, {
-      userInfo: state.articles.concat(action.payload)
-    });
          userInfo: action.payload,
         isLoggedIn:true
       };
