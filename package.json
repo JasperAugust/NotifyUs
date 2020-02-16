@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/JasperAugust/NotifyUs#readme",
   "dependencies": {
-    "concurrently": "^5.0.1"
+    "aws-amplify": "^2.2.4",
+    "concurrently": "^5.1.0"
   }
 }

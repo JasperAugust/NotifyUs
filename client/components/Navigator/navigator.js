@@ -19,6 +19,18 @@ const Icon = ({ name, size, color }) => (
   />
 );
 
+// TODO: Implement switchNavigator to have authentication screen before main screen switcher.
+// const AuthNavigator = createSwitchNavigator(
+//   {
+//     Authentication: {
+//       screen: AuthScreen,
+//       navigationOptions: ({navigation}) => ({
+//         tab
+//       })
+//     }
+//   }
+// )c
+
 const MainNavigator = createBottomTabNavigator(
   {
     Map: {
