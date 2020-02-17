@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation';
 
+// TODO customize
 class SignInScreen extends React.Component {
   static navigationOptions = {
     title: 'Please sign in',

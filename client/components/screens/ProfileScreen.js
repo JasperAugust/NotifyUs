@@ -24,6 +24,11 @@ export default class ProfileScreen extends Component {
       console.log(error);
     }
   }
+
+  async displayUser() {
+    const user = await Auth.currentAuthenticatedUser().catch(err => console.log(err));
+    console.log(user);
+  }
   
 
   render() {
@@ -48,6 +53,15 @@ export default class ProfileScreen extends Component {
         <Button
           title="Launch Hosted UI"
           onPress={() => Auth.federatedSignIn()}
+        />
+
+        <Button
+         title="log user info"
+         onPress={() => this.displayUser()}
+        />
+        <Button
+         title="Log out"
+         onPress={ async () => await Auth.signOut()}
         />
       </View>
     );
