@@ -14,8 +14,7 @@
         "categories": {
             "auth": {
                 "notifyusauth2eb489f3": {
-                    "facebookAppId": "435729943774253",
-                    "googleClientId": "649479120758-6gncqoe8uu0phjber7t20vq5tuqpp3gs.apps.googleusercontent.com"
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"435729943774253\",\"client_secret\":\"da2b37ac1950b5e84989599203c4c55d\"},{\"ProviderName\":\"Google\",\"client_id\":\"649479120758-6gncqoe8uu0phjber7t20vq5tuqpp3gs.apps.googleusercontent.com\",\"client_secret\":\"6JAhBj7du-sMd7GVA-Cguzab\"}]"
                 }
             }
         }

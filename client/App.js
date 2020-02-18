@@ -1,7 +1,8 @@
 import React from 'react';
-import { View,AsyncStorage } from 'react-native';
+import { View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { rootStack } from './components/Navigator/navigator';
+// import { AppProviders } from "./context";
 
 
 const sentry = require('./services/sentry');
@@ -9,9 +10,11 @@ const sentry = require('./services/sentry');
 
 export default function App() {
   return (
-        <View style={{ flex: 1 }}>
+      //   <AppProviders>
+            <View style={{flex:1}}>
               <AppContainer />
-        </View>
+            </View>
+      //   </AppProviders>
   );
 }
 

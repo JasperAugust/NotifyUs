@@ -21,16 +21,17 @@ const Icon = ({ name, size, color }) => (
 
 // TODO: Implement switchNavigator to have authentication screen before main screen switcher.
 // Check React Navigation 5!
-// const AuthNavigator = createSwitchNavigator(
-//   {
-//     Authentication: {
-//       screen: AuthScreen,
-//       navigationOptions: ({navigation}) => ({
-//         
-//       })
-//     }
-//   }
-// )
+
+/* const AuthNavigator = createSwitchNavigator(
+  {
+    Authentication: {
+      screen: AuthScreen,
+      navigationOptions: ({navigation}) => ({
+        
+      })
+    }
+  }
+) */
 
 const MainNavigator = createBottomTabNavigator(
   {

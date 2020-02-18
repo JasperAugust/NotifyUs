@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { formatRelative, subDays } from 'date-fns';
-
+import { MaterialIcons } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import uuid from 'uuid';
@@ -157,7 +157,7 @@ export default class HistoryScreen extends React.Component {
             aspect: [4, 3],
         });
 
-        this._handleImagePicked(pickerResult);
+        this.handleImagePicked(pickerResult);
     };
     // Take a photo from the gallery
     _pickImage = async () => {
@@ -166,10 +166,10 @@ export default class HistoryScreen extends React.Component {
             aspect: [4, 3],
         });
 
-        this._handleImagePicked(pickerResult);
+        this.handleImagePicked(pickerResult);
     };
 
-    _handleImagePicked = async pickerResult => {
+    handleImagePicked = async pickerResult => {
         try {
             this.setState({ uploading: true });
 
@@ -237,7 +237,6 @@ const styles = StyleSheet.create({
         fontSize: 42,
     },
     reportsHeading: {
-        // flexDirection: 'row',
         flex: 1,
         paddingTop: 40,
         alignContent: 'center',
