@@ -1,10 +1,10 @@
 {
-    "auth": {
-        "notifyusauth2eb489f3": {
-            "service": "Cognito",
-            "providerPlugin": "awscloudformation",
-            "dependsOn": [],
-            "customAuth": false
-        }
-    }
+	"auth": {
+		"notifyus8e485462": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
 }
