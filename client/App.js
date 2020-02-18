@@ -11,7 +11,7 @@ import { withAuthenticator } from 'aws-amplify-react-native';
 
 const sentry = require('./services/sentry');
 
-class App extends Component<Props> {
+export default class App extends Component<Props> {
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -21,6 +21,6 @@ class App extends Component<Props> {
   }
 }
 
-export default withAuthenticator(App);
+// export default withAuthenticator(App);
 
 const AppContainer = createAppContainer(rootStack);

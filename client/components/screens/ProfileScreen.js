@@ -3,6 +3,8 @@ import { Image, Button, StyleSheet, Text, View, Alert } from 'react-native';
 
 import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from 'react-native-dotenv';
 
+import { Auth } from 'aws-amplify';
+
 export default class ProfileScreen extends Component {
   state = {
     userInfo: null,
@@ -26,7 +28,7 @@ export default class ProfileScreen extends Component {
   }
 
   render() {
-    const { name } = this.state;
+    const { name, userInfo } = this.state;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View>
@@ -44,13 +46,10 @@ export default class ProfileScreen extends Component {
           title='Sign in with Facebook'
           onPress={() => Auth.federatedSignIn({ provider: 'Facebook' })}
         />
-        <Button
-          title='Launch Hosted UI'
-          onPress={() => Auth.federatedSignIn()}
-        />
+
+        <Button title='Log out' onPress={async () => await Auth.signOut()} />
 
         <Button title='log user info' onPress={() => this.displayUser()} />
-        <Button title='Log out' onPress={async () => await Auth.signOut()} />
       </View>
     );
   }
