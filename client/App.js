@@ -1,25 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { rootStack } from './components/Navigator/navigator';
 // import { AppProviders } from "./context";
-import Amplify from 'aws-amplify';
-import awsmobile from '../../aws-exports.js';
+import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
-Amplify.configure(awsmobile);
-
-import { withAuthenticator } from 'aws-amplify';
+import { withAuthenticator } from 'aws-amplify-react-native';
 
 const sentry = require('./services/sentry');
 
-export default function App() {
-  return (
-    //   <AppProviders>
-    <View style={{ flex: 1 }}>
-      <AppContainer />
-    </View>
-    //   </AppProviders>
-  );
+class App extends Component<Props> {
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <AppContainer />
+      </View>
+    );
+  }
 }
+
+export default withAuthenticator(App);
 
 const AppContainer = createAppContainer(rootStack);
