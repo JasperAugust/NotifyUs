@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Image, Button, StyleSheet, Text, View, Alert } from 'react-native';
 
-import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from 'react-native-dotenv';
-
 import { Auth } from 'aws-amplify';
-import { withOAuth } from "aws-amplify-react-native";
+import { withOAuth } from 'aws-amplify-react-native';
 
 export default class ProfileScreen extends Component {
   state = {
@@ -12,14 +10,6 @@ export default class ProfileScreen extends Component {
     isLoggedIn: false,
     name: null,
   };
-
-  async logOut() {
-    try {
-      await Auth.signOut();
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   async displayUser() {
     const user = await Auth.currentAuthenticatedUser().catch(err =>
@@ -32,13 +22,6 @@ export default class ProfileScreen extends Component {
     const { name, userInfo } = this.state;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <View>
-          {name ? (
-            <Text style={styles.title}>You are logged in, {name}!</Text>
-          ) : (
-            <Button title='Log in with Auth0' onPress={this.login} />
-          )}
-        </View>
         <Button
           title='Sign in with Google'
           onPress={() => Auth.federatedSignIn({ provider: 'Google' })}
@@ -48,7 +31,12 @@ export default class ProfileScreen extends Component {
           onPress={() => Auth.federatedSignIn({ provider: 'Facebook' })}
         />
 
-        <Button title='Log out' onPress={async () => await Auth.signOut()} />
+        <Button
+          title='Sign in with hosted UI'
+          onPress={() => Auth.federatedSignIn()}
+        />
+
+        <Button title='Log out' onPress={() => Auth.signOut()} />
 
         <Button title='log user info' onPress={() => this.displayUser()} />
       </View>

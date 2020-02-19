@@ -4,8 +4,8 @@ import { createAppContainer } from 'react-navigation';
 import { rootStack } from './components/Navigator/navigator';
 // import { AppProviders } from "./context";
 import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from './aws-exports';
-Amplify.configure(awsconfig);
+import config from './aws-exports';
+Amplify.configure(config);
 
 import { withOAuth } from 'aws-amplify-react-native';
 
