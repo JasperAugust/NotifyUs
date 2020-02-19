@@ -4,6 +4,7 @@ import { Image, Button, StyleSheet, Text, View, Alert } from 'react-native';
 import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from 'react-native-dotenv';
 
 import { Auth } from 'aws-amplify';
+import { withOAuth } from "aws-amplify-react-native";
 
 export default class ProfileScreen extends Component {
   state = {
