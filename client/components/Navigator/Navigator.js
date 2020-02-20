@@ -11,9 +11,7 @@ import MapScreen from '../screens/MapScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import reportModal from '../screens/reportModal';
-
 import WelcomeScreen from '../screens/WelcomeScreen';
-
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
 const Icon = ({ name, size, color }) => (
@@ -83,5 +81,4 @@ const topNavigator = createSwitchNavigator({
   Auth: { screen: WelcomeScreen },
   App: MainNav,
 });
-
 export default topNavigator;
