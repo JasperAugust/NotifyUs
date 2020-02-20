@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { rootStack } from './components/Navigator/navigator';
-// import { AppProviders } from "./context";
-import Amplify, { Auth } from 'aws-amplify';
-import config from './aws-exports';
-Amplify.configure(config);
+import { registerRootComponent } from 'expo';
 
-import { withOAuth } from 'aws-amplify-react-native';
+import { createAppContainer } from 'react-navigation';
+import { topNavigator } from './components/Navigator/Navigator';
+
+import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
 const sentry = require('./services/sentry');
 
-class App extends Component<Props> {
+const AppContainer = createAppContainer(topNavigator);
+
+export default class App extends Component<Props> {
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -20,7 +22,3 @@ class App extends Component<Props> {
     );
   }
 }
-
-export default withOAuth(App);
-
-const AppContainer = createAppContainer(rootStack);

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Image, Button, StyleSheet, Text, View, Alert } from 'react-native';
 
 import { Auth } from 'aws-amplify';
-import { withOAuth } from 'aws-amplify-react-native';
 
 export default class ProfileScreen extends Component {
   state = {
@@ -15,7 +14,10 @@ export default class ProfileScreen extends Component {
     const user = await Auth.currentAuthenticatedUser().catch(err =>
       console.log(err)
     );
-    console.log(user);
+    this.setState({ userInfo: user });
+  }
+  async signOut() {
+    await Auth.signOut();
   }
 
   render() {

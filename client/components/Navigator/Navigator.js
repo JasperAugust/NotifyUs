@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createSwitchNavigator } from 'react-navigation';
 
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
@@ -11,6 +12,10 @@ import ProfileScreen from '../screens/ProfileScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import reportModal from '../screens/reportModal';
 
+import WelcomeScreen from '../screens/WelcomeScreen';
+
+import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+
 const Icon = ({ name, size, color }) => (
   <Ionicons
     name={`${Platform.OS === 'ios' ? 'ios' : 'md'}-${name}`}
@@ -19,21 +24,7 @@ const Icon = ({ name, size, color }) => (
   />
 );
 
-// TODO: Implement switchNavigator to have authentication screen before main screen switcher.
-// Check React Navigation 5!
-
-/* const AuthNavigator = createSwitchNavigator(
-  {
-    Authentication: {
-      screen: AuthScreen,
-      navigationOptions: ({navigation}) => ({
-        
-      })
-    }
-  }
-) */
-
-const MainNavigator = createBottomTabNavigator(
+const appNavigator = createBottomTabNavigator(
   {
     Map: {
       screen: MapScreen,
@@ -76,9 +67,10 @@ const MainNavigator = createBottomTabNavigator(
   }
 );
 
-export const rootStack = createStackNavigator(
+// Main App navigation
+const MainNav = createStackNavigator(
   {
-    Home: { screen: MainNavigator },
+    Home: { screen: appNavigator },
     Modal: { screen: reportModal },
   },
   {
@@ -86,3 +78,10 @@ export const rootStack = createStackNavigator(
     headerMode: 'none',
   }
 );
+const topNavigator = createSwitchNavigator({
+  Authloading: { screen: AuthLoadingScreen },
+  Auth: { screen: WelcomeScreen },
+  App: MainNav,
+});
+
+export default topNavigator;
