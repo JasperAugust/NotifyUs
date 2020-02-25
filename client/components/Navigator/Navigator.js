@@ -66,7 +66,7 @@ const appNavigator = createBottomTabNavigator(
 );
 
 // Main App navigation
-const MainNav = createStackNavigator(
+export const MainNav = createStackNavigator(
   {
     Home: { screen: appNavigator },
     Modal: { screen: reportModal },
