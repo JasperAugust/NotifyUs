@@ -9,6 +9,7 @@ export default class AuthLoadingScreen extends React.Component {
   };
   async componentDidMount() {
     await this.loadApp();
+    this.props.navigation.navigate(this.state.userToken ? 'App' : 'Auth');
   }
   // Get the logged in users (their JWT) and remember them
   loadApp = async () => {
@@ -20,7 +21,6 @@ export default class AuthLoadingScreen extends React.Component {
         });
       })
       .catch(err => console.log(err));
-    this.props.navigation.navigate(this.state.userToken ? 'App' : 'Auth');
   };
   render() {
     return (
