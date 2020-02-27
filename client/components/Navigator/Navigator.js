@@ -76,9 +76,9 @@ export const MainNav = createStackNavigator(
     headerMode: 'none',
   }
 );
-const topNavigator = createSwitchNavigator({
-  Authloading: { screen: AuthLoadingScreen },
+export const topNavigator = createSwitchNavigator({
   Auth: { screen: WelcomeScreen },
+  Authloading: { screen: AuthLoadingScreen },
   App: MainNav,
 });
 export default topNavigator;

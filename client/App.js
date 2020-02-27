@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { registerRootComponent } from 'expo';
 
 import { createAppContainer } from 'react-navigation';
-import { MainNav } from './components/Navigator/Navigator';
+import { MainNav, topNavigator } from './components/Navigator/Navigator';
 
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
 
@@ -20,4 +20,4 @@ export default class App extends Component<Props> {
     );
   }
 }
-const AppContainer = createAppContainer(MainNav);
+const AppContainer = createAppContainer(topNavigator);

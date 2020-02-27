@@ -12,7 +12,6 @@ import { Auth } from 'aws-amplify';
 const logo = require('../../assets/Tartu.jpeg');
 
 export default class WelcomeScreen extends React.Component {
-  
   handleRoute = async destination => {
     await this.props.navigation.navigate(destination);
   };
@@ -40,15 +39,28 @@ export default class WelcomeScreen extends React.Component {
         console.log(err);
       });
   };
+  async displayUser() {
+    const user = await Auth.currentAuthenticatedUser().catch(err =>
+      console.log(err)
+    );
+    this.setState({ userInfo: user });
+  }
+  async signOut() {
+    await Auth.signOut();
+  }
   render() {
     return (
       <View style={styles.container}>
         <Image source={logo} style={{ width: 110.46, height: 117 }} />
-        <Button title='Sign in with Google' onPress={() => this.loginGoogle} />
+        <Button
+          title='Sign in with Google'
+          onPress={() => this.loginGoogle()}
+        />
         <Button
           title='Sign in with Facebook'
-          onPress={() => this.loginFacebook}
+          onPress={() => this.loginFacebook()}
         />
+        <Button title='Display user info' onPress={() => this.displayUser()} />
       </View>
     );
   }
