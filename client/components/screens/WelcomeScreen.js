@@ -43,6 +43,7 @@ export default class WelcomeScreen extends React.Component {
     const user = await Auth.currentAuthenticatedUser().catch(err =>
       console.log(err)
     );
+    console.log(user);
     this.setState({ userInfo: user });
   }
   async signOut() {
@@ -59,6 +60,10 @@ export default class WelcomeScreen extends React.Component {
         <Button
           title='Sign in with Facebook'
           onPress={() => this.loginFacebook()}
+        />
+        <Button
+          title='Sign in with hosted UI'
+          onPress={() => Auth.federatedSignIn()}
         />
         <Button title='Display user info' onPress={() => this.displayUser()} />
       </View>
