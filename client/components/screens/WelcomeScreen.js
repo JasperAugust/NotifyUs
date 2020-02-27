@@ -12,10 +12,16 @@ import { Auth } from 'aws-amplify';
 const logo = require('../../assets/Tartu.jpeg');
 
 export default class WelcomeScreen extends React.Component {
+  state = {
+    user: null,
+    isLoggedIn: false,
+    name: null,
+  };
   handleRoute = async destination => {
     await this.props.navigation.navigate(destination);
   };
 
+  // If FB signIn successful, navigates to AuthLoading screen
   loginFacebook = async => {
     Auth.federatedSignIn({ provider: 'Facebook' })
       .then(user => {
@@ -28,6 +34,7 @@ export default class WelcomeScreen extends React.Component {
       });
   };
 
+  // If Google signIn successful, navigates to AuthLoading screen
   loginGoogle = async => {
     Auth.federatedSignIn({ provider: 'Google' })
       .then(user => {
@@ -44,7 +51,6 @@ export default class WelcomeScreen extends React.Component {
       console.log(err)
     );
     console.log(user);
-    this.setState({ userInfo: user });
   }
   async signOut() {
     await Auth.signOut();
