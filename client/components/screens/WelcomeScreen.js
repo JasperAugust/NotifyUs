@@ -26,10 +26,10 @@ export default class WelcomeScreen extends React.Component {
     Auth.federatedSignIn({ provider: 'Facebook' })
       .then(user => {
         this.setState({ user });
-        this.handleRoute('AuthLoading');
+        this.handleRoute('Authloading');
       })
       .catch(err => {
-        this.handleRoute('WelcomeScreen');
+        // this.handleRoute('WelcomeScreen');
         console.log(err);
       });
   };
@@ -39,10 +39,10 @@ export default class WelcomeScreen extends React.Component {
     Auth.federatedSignIn({ provider: 'Google' })
       .then(user => {
         this.setState({ user });
-        this.handleRoute('AuthLoading');
+        this.handleRoute('Authloading');
       })
       .catch(err => {
-        this.handleRoute('WelcomeScreen');
+        // this.handleRoute('WelcomeScreen');
         console.log(err);
       });
   };
