@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import { Auth } from 'aws-amplify';
-const logo = require('../../assets/Tartu.jpeg');
+const logo = require('../../assets/logo.png');
 
 export default class WelcomeScreen extends React.Component {
   state = {

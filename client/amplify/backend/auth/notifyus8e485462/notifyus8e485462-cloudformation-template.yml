@@ -88,6 +88,12 @@ Parameters:
                     
   usernameAttributes:
     Type: CommaDelimitedList
+              
+  userPoolGroupList:
+    Type: CommaDelimitedList
+              
+  dependsOn:
+    Type: CommaDelimitedList
       
   hostedUIDomainName:
     Type: String
@@ -97,13 +103,7 @@ Parameters:
       
   hostedUIProviderMeta:
     Type: String
-                      
-  userPoolGroupList:
-    Type: CommaDelimitedList
               
-  dependsOn:
-    Type: CommaDelimitedList
-      
   hostedUIProviderCreds:
     Type: String
               

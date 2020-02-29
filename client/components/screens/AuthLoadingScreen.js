@@ -1,14 +1,16 @@
 import React from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 
-import Auth from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 
 export default class AuthLoadingScreen extends React.Component {
   state = {
     userToken: null,
   };
   async componentDidMount() {
+    console.log('O man');
     await this.loadApp();
+    console.log('shit');
     this.props.navigation.navigate(this.state.userToken ? 'App' : 'Auth');
   }
   // Get the logged in users (their JWT) and remember them

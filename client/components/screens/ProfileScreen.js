@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
-import { Image, Button, StyleSheet, Text, View, Alert } from 'react-native';
-
+import {
+  Image,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { Auth } from 'aws-amplify';
 
 export default class ProfileScreen extends Component {
@@ -20,27 +28,52 @@ export default class ProfileScreen extends Component {
     await Auth.signOut();
   }
 
+  // Sign out from the app alert
+  signOutAlert = async () => {
+    await Alert.alert(
+      'Sign Out',
+      'Are you sure you want to sign out from the app?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Canceled'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => this.signOut() },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  // Sign out from the app
+  signOut = async () => {
+    await Auth.signOut()
+      .then(() => {
+        console.log('Sign out complete');
+        this.props.navigation.navigate('Authloading');
+      })
+      .catch(err => console.log('Error while signing out!', err));
+  };
+
   render() {
     const { name, userInfo } = this.state;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Button
-          title='Sign in with Google'
-          onPress={() => Auth.federatedSignIn({ provider: 'Google' })}
-        />
-        <Button
-          title='Sign in with Facebook'
-          onPress={() => Auth.federatedSignIn({ provider: 'Facebook' })}
-        />
-
-        <Button
-          title='Sign in with hosted UI'
-          onPress={() => Auth.federatedSignIn()}
-        />
-
-        <Button title='Log out' onPress={() => Auth.signOut()} />
-
         <Button title='log user info' onPress={() => this.displayUser()} />
+
+        <TouchableOpacity
+          style={[
+            styles.buttonStyle,
+            { flexDirection: 'row', justifyContent: 'center' },
+          ]}
+          onPress={this.signOutAlert}
+        >
+          <Ionicons
+            name='md-power'
+            style={{ color: '#000', marginRight: 10, fontSize: 30 }}
+          />
+          <Text style={styles.buttonText}>Sign out</Text>
+        </TouchableOpacity>
       </View>
     );
   }
