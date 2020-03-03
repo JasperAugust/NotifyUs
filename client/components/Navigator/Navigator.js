@@ -84,10 +84,9 @@ const MainNav = createStackNavigator(
 const AuthStack = createStackNavigator({
   Welcome: {
     screen: WelcomeScreen,
-    navigationOptions: () => ({
-      title: `Welcome to this App`, // for the header screen
-      headerBackTitle: 'Back',
-    }),
+    navigationOptions: {
+      header: null,
+    },
   },
   SignUp: {
     screen: SignUpScreen,

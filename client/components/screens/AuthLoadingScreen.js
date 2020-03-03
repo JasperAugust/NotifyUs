@@ -8,9 +8,7 @@ export default class AuthLoadingScreen extends React.Component {
     userToken: null,
   };
   async componentDidMount() {
-    console.log('O man');
     await this.loadApp();
-    console.log('shit');
     this.props.navigation.navigate(this.state.userToken ? 'App' : 'Auth');
   }
   // Get the logged in users (their JWT) and remember them

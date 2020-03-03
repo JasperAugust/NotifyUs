@@ -26,10 +26,13 @@
         "email"
     ],
     "userpoolClientReadAttributes": [
-        "email"
+        "email",
+        "family_name",
+        "given_name",
+        "email_verified"
     ],
     "userpoolClientLambdaRole": "notify8e485462_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
+    "userpoolClientSetAttributes": true,
     "resourceName": "notifyus8e485462",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
@@ -44,18 +47,23 @@
             "Arn"
         ]
     },
-    "useDefault": "defaultSocial",
-    "hostedUI": true,
+    "useDefault": "manual",
+    "hostedUI": false,
     "usernameAttributes": [
         "email"
     ],
     "userPoolGroupList": [],
     "dependsOn": [],
-    "hostedUIDomainName": "notifyus79e657db-79e657db",
-    "authProvidersUserPool": [
-        "Facebook",
-        "Google"
+    "thirdPartyAuth": true,
+    "authProviders": [
+        "graph.facebook.com",
+        "accounts.google.com"
     ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"exp://10.40.171.195:19000/\"],\"LogoutURLs\":[\"exp://10.40.171.195:19000/\"]}"
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "triggers": "{}",
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": []
 }

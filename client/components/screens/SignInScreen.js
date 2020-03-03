@@ -18,7 +18,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Container, Item, Input } from 'native-base';
 
 // AWS Amplify modular import
-import Auth from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 
 // Load the app logo
 const logo = require('../../assets/logo.png');
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     alignItems: 'center',
-    backgroundColor: '#b44666',
+    backgroundColor: '#32CD32',
     padding: 14,
     marginBottom: 20,
     borderRadius: 3,

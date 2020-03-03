@@ -42,18 +42,18 @@ export default class SignUpScreen extends React.Component {
   }
 
   async signUp() {
-    const { username, passoword, email } = this.state;
+    const { username, password, email } = this.state;
 
     await Auth.signUp({
       username,
-      passoword,
+      password,
       attributes: { email },
     })
       .then(() => {
         console.log('Sign up successful!');
         Alert.alert('Enter the confirmation code you received');
       })
-      .catch(() => {
+      .catch(err => {
         if (!err.message) {
           console.log('Error when signing up: ', err);
           Alert.alert('Error when signing up: ', err);
@@ -67,7 +67,8 @@ export default class SignUpScreen extends React.Component {
   //   Confirm users and redirect to SignIn page
   async confirmSignUp() {
     const { username, authCode } = this.state;
-    await Auth.confirmSingUp(username, authCode)
+    const { email } = username;
+    await Auth.confirmSignUp(username, authCode)
       .then(() => {
         this.props.navigation.navigate('SignIn');
         console.log('Confirm sign up successful');
@@ -176,27 +177,6 @@ export default class SignUpScreen extends React.Component {
                       //   onEndEditing={() => this.fadeIn()}
                     />
                   </Item>
-                  {/* email section */}
-                  <Item style={styles.itemStyle}>
-                    <Ionicons name='ios-mail' style={styles.iconStyle} />
-                    <Input
-                      style={styles.input}
-                      placeholder='Email'
-                      placeholderTextColor='#adb4bc'
-                      keyboardType={'email-address'}
-                      returnKeyType='next'
-                      autoCapitalize='none'
-                      autoCorrect={false}
-                      secureTextEntry={false}
-                      ref='ThirdInput'
-                      onSubmitEditing={event => {
-                        this.refs.FourthInput._root.focus();
-                      }}
-                      onChangeText={value => this.onChangeText('email', value)}
-                      //   onFocus={() => this.fadeOut()}
-                      //   onEndEditing={() => this.fadeIn()}
-                    />
-                  </Item>
 
                   <TouchableOpacity
                     onPress={() => this.signUp()}
@@ -280,7 +260,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     alignItems: 'center',
-    backgroundColor: '#b44666',
+    backgroundColor: '#32CD32',
     padding: 14,
     marginBottom: 10,
     borderRadius: 3,
@@ -317,6 +297,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 12,
     alignItems: 'center',
-    backgroundColor: '#b44666',
+    backgroundColor: '#32CD32',
   },
 });
