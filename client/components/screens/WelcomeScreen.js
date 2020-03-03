@@ -67,10 +67,24 @@ export default class WelcomeScreen extends React.Component {
           title='Sign in with Facebook'
           onPress={() => this.loginFacebook()}
         />
-        <Button
-          title='Sign in with hosted UI'
-          onPress={() => Auth.federatedSignIn()}
-        />
+        <TouchableOpacity
+          onPress={() => this.handleNavigation('SignIn')}
+          style={styles.buttonStyle}
+        >
+          <Text style={styles.textStyle}>Sign In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.handleNavigation('SignUp')}
+          style={styles.buttonStyle}
+        >
+          <Text style={styles.textStyle}>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.handleNavigation('ForgetPassword')}
+          style={styles.buttonStyle}
+        >
+          <Text style={styles.textStyle}>Forget password ?</Text>
+        </TouchableOpacity>
         <Button title='Display user info' onPress={() => this.displayUser()} />
       </View>
     );

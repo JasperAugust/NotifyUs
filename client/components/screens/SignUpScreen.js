@@ -23,13 +23,12 @@ import { Auth } from 'aws-amplify';
 
 // TODO: Jasper: Logo HERE
 
-export default class SingUpScreen extends React.Component {
+export default class SignUpScreen extends React.Component {
   state = {
     username: '',
     password: '',
     email: '',
     isHidden: false,
-    flag: defaultFlag,
     modalVisible: false,
     authCode: '',
   };
@@ -121,13 +120,13 @@ export default class SingUpScreen extends React.Component {
               <View style={styles.logoContainer}>
                 {isHidden ? (
                   <Animated.Image
-                    source={logo}
-                    style={{ opacity: fadeIn, width: 110.46, height: 117 }}
+                  // source={logo}
+                  // style={{ opacity: fadeIn, width: 110.46, height: 117 }}
                   />
                 ) : (
                   <Animated.Image
-                    source={logo}
-                    style={{ opacity: fadeOut, width: 110.46, height: 117 }}
+                  // source={logo}
+                  // style={{ opacity: fadeOut, width: 110.46, height: 117 }}
                   />
                 )}
               </View>
@@ -150,8 +149,8 @@ export default class SingUpScreen extends React.Component {
                       onChangeText={value =>
                         this.onChangeText('username', value)
                       }
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
+                      //   onFocus={() => this.fadeOut()}
+                      //   onEndEditing={() => this.fadeIn()}
                     />
                   </Item>
                   {/*  password section  */}
@@ -173,8 +172,8 @@ export default class SingUpScreen extends React.Component {
                       onChangeText={value =>
                         this.onChangeText('password', value)
                       }
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
+                      //   onFocus={() => this.fadeOut()}
+                      //   onEndEditing={() => this.fadeIn()}
                     />
                   </Item>
                   {/* email section */}
@@ -194,98 +193,11 @@ export default class SingUpScreen extends React.Component {
                         this.refs.FourthInput._root.focus();
                       }}
                       onChangeText={value => this.onChangeText('email', value)}
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
+                      //   onFocus={() => this.fadeOut()}
+                      //   onEndEditing={() => this.fadeIn()}
                     />
                   </Item>
-                  {/* phone section  */}
-                  <Item style={styles.itemStyle}>
-                    <Ionicons name='ios-call' style={styles.iconStyle} />
-                    {/* country flag */}
-                    <View>
-                      <Text style={{ fontSize: 40 }}>{flag}</Text>
-                    </View>
-                    {/* open modal */}
-                    <Ionicons
-                      name='md-arrow-dropdown'
-                      style={[styles.iconStyle, { marginLeft: 5 }]}
-                      onPress={() => this.showModal()}
-                    />
-                    <Input
-                      style={styles.input}
-                      placeholder='+44766554433'
-                      placeholderTextColor='#adb4bc'
-                      keyboardType={'phone-pad'}
-                      returnKeyType='done'
-                      autoCapitalize='none'
-                      autoCorrect={false}
-                      secureTextEntry={false}
-                      ref='FourthInput'
-                      value={this.state.phoneNumber}
-                      onChangeText={val => {
-                        if (this.state.phoneNumber === '') {
-                          // render UK phone code by default when Modal is not open
-                          this.onChangeText('phoneNumber', defaultCode + val);
-                        } else {
-                          // render country code based on users choice with Modal
-                          this.onChangeText('phoneNumber', val);
-                        }
-                      }}
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
-                    />
-                    {/* Modal for country code and flag */}
-                    <Modal
-                      animationType='slide' // fade
-                      transparent={false}
-                      visible={this.state.modalVisible}
-                    >
-                      <View style={{ flex: 1 }}>
-                        <View
-                          style={{
-                            flex: 10,
-                            paddingTop: 80,
-                            backgroundColor: '#5059ae',
-                          }}
-                        >
-                          <FlatList
-                            data={countryData}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={({ item }) => (
-                              <TouchableWithoutFeedback
-                                onPress={() => this.getCountry(item.name)}
-                              >
-                                <View
-                                  style={[
-                                    styles.countryStyle,
-                                    {
-                                      flexDirection: 'row',
-                                      alignItems: 'center',
-                                      justifyContent: 'space-between',
-                                    },
-                                  ]}
-                                >
-                                  <Text style={{ fontSize: 45 }}>
-                                    {item.flag}
-                                  </Text>
-                                  <Text style={{ fontSize: 20, color: '#fff' }}>
-                                    {item.name} ({item.dial_code})
-                                  </Text>
-                                </View>
-                              </TouchableWithoutFeedback>
-                            )}
-                          />
-                        </View>
-                        <TouchableOpacity
-                          onPress={() => this.hideModal()}
-                          style={styles.closeButtonStyle}
-                        >
-                          <Text style={styles.textStyle}>Close</Text>
-                        </TouchableOpacity>
-                      </View>
-                    </Modal>
-                  </Item>
-                  {/* End of phone input */}
+
                   <TouchableOpacity
                     onPress={() => this.signUp()}
                     style={styles.buttonStyle}
@@ -307,8 +219,8 @@ export default class SingUpScreen extends React.Component {
                       onChangeText={value =>
                         this.onChangeText('authCode', value)
                       }
-                      onFocus={() => this.fadeOut()}
-                      onEndEditing={() => this.fadeIn()}
+                      //   onFocus={() => this.fadeOut()}
+                      //   onEndEditing={() => this.fadeIn()}
                     />
                   </Item>
                   <TouchableOpacity

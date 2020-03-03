@@ -15,7 +15,7 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
 import WelcomeScreen from '../screens/WelcomeScreen';
 import SignUpScreen from '../screens/SignUpScreen';
-import SgnInScreen from '../screens/SignInScreen';
+import SignInScreen from '../screens/SignInScreen';
 import ForgetPasswordScreen from '../screens/ForgotPasswordScreen';
 
 const Icon = ({ name, size, color }) => (
@@ -80,11 +80,6 @@ const MainNav = createStackNavigator(
     headerMode: 'none',
   }
 );
-export const topNavigator = createSwitchNavigator({
-  Auth: AuthStack,
-  Authloading: { screen: AuthLoadingScreen },
-  App: MainNav,
-});
 
 const AuthStack = createStackNavigator({
   Welcome: {
@@ -113,4 +108,11 @@ const AuthStack = createStackNavigator({
     }),
   },
 });
+
+export const topNavigator = createSwitchNavigator({
+  Auth: AuthStack,
+  Authloading: { screen: AuthLoadingScreen },
+  App: MainNav,
+});
+
 export default topNavigator;
