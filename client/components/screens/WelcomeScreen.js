@@ -17,7 +17,7 @@ export default class WelcomeScreen extends React.Component {
     isLoggedIn: false,
     name: null,
   };
-  handleRoute = async destination => {
+  handleNavigation = async destination => {
     await this.props.navigation.navigate(destination);
   };
 
@@ -26,10 +26,10 @@ export default class WelcomeScreen extends React.Component {
     Auth.federatedSignIn({ provider: 'Facebook' })
       .then(user => {
         this.setState({ user });
-        this.handleRoute('Authloading');
+        this.handleNavigation('Authloading');
       })
       .catch(err => {
-        // this.handleRoute('WelcomeScreen');
+        // this.handleNavigation('WelcomeScreen');
         console.log(err);
       });
   };
@@ -39,10 +39,10 @@ export default class WelcomeScreen extends React.Component {
     Auth.federatedSignIn({ provider: 'Google' })
       .then(user => {
         this.setState({ user });
-        this.handleRoute('Authloading');
+        this.handleNavigation('Authloading');
       })
       .catch(err => {
-        // this.handleRoute('WelcomeScreen');
+        // this.handleNavigation('WelcomeScreen');
         console.log(err);
       });
   };
@@ -80,7 +80,7 @@ export default class WelcomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#b44666', // #b13366
+    backgroundColor: '#32CD32', // #b13366
     alignItems: 'center',
     justifyContent: 'center',
   },

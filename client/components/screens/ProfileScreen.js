@@ -22,10 +22,8 @@ export default class ProfileScreen extends Component {
     const user = await Auth.currentAuthenticatedUser().catch(err =>
       console.log(err)
     );
+    console.log(user);
     this.setState({ userInfo: user });
-  }
-  async signOut() {
-    await Auth.signOut();
   }
 
   // Sign out from the app alert
@@ -106,5 +104,10 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     alignContent: 'center',
     justifyContent: 'space-between',
+  },
+  buttonText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',
   },
 });

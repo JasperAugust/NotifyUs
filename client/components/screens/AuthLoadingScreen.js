@@ -35,7 +35,7 @@ export default class AuthLoadingScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#b44666',
+    backgroundColor: '#32CD32',
     alignItems: 'center',
     justifyContent: 'center',
   },
