@@ -11,8 +11,12 @@ import MapScreen from '../screens/MapScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import reportModal from '../screens/reportModal';
-import WelcomeScreen from '../screens/WelcomeScreen';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+
+import WelcomeScreen from '../screens/WelcomeScreen';
+import SignUpScreen from '../screens/SignUpScreen';
+import SgnInScreen from '../screens/SignInScreen';
+import ForgetPasswordScreen from '../screens/ForgotPasswordScreen';
 
 const Icon = ({ name, size, color }) => (
   <Ionicons
@@ -66,7 +70,7 @@ const appNavigator = createBottomTabNavigator(
 );
 
 // Main App navigation
-export const MainNav = createStackNavigator(
+const MainNav = createStackNavigator(
   {
     Home: { screen: appNavigator },
     Modal: { screen: reportModal },
@@ -77,8 +81,36 @@ export const MainNav = createStackNavigator(
   }
 );
 export const topNavigator = createSwitchNavigator({
-  Auth: { screen: WelcomeScreen },
+  Auth: AuthStack,
   Authloading: { screen: AuthLoadingScreen },
   App: MainNav,
+});
+
+const AuthStack = createStackNavigator({
+  Welcome: {
+    screen: WelcomeScreen,
+    navigationOptions: () => ({
+      title: `Welcome to this App`, // for the header screen
+      headerBackTitle: 'Back',
+    }),
+  },
+  SignUp: {
+    screen: SignUpScreen,
+    navigationOptions: () => ({
+      title: `Create a new account`,
+    }),
+  },
+  SignIn: {
+    screen: SignInScreen,
+    navigationOptions: () => ({
+      title: `Log in to your account`,
+    }),
+  },
+  ForgetPassword: {
+    screen: ForgetPasswordScreen,
+    navigationOptions: () => ({
+      title: `Create a new password`,
+    }),
+  },
 });
 export default topNavigator;
