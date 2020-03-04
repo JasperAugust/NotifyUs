@@ -47,14 +47,9 @@ export default class WelcomeScreen extends React.Component {
   loginFacebook = async => {
     Auth.federatedSignIn({ provider: 'Facebook' })
       .then(user => {
-        console.log("I'm getting rendered again");
         this.setState({ user });
-        console.log('User saved');
-        // this.handleNavigation('Authloading');
-        console.log('redirected to authloading');
       })
       .catch(err => {
-        console.log('We have an error bois and girls.');
         console.log(err);
       });
   };
@@ -64,7 +59,6 @@ export default class WelcomeScreen extends React.Component {
     Auth.federatedSignIn({ provider: 'Google' })
       .then(user => {
         this.setState({ user });
-        // this.handleNavigation('Authloading');
       })
       .catch(err => {
         console.log(err);
@@ -83,33 +77,43 @@ export default class WelcomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Image source={logo} style={{ width: 110.46, height: 117 }} />
-        <Button
-          title='Sign in with Google'
+        <TouchableOpacity
           onPress={() => this.loginGoogle()}
-        />
-        <Button
-          title='Sign in with Facebook'
+          style={styles.buttonStyle}
+        >
+          <Text style={styles.textStyle}>Log in with Google</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => this.loginFacebook()}
-        />
-        <TouchableOpacity
-          onPress={() => this.handleNavigation('SignIn')}
           style={styles.buttonStyle}
         >
-          <Text style={styles.textStyle}>Sign In</Text>
+          <Text style={styles.textStyle}>Log in with Facebook</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.handleNavigation('SignUp')}
-          style={styles.buttonStyle}
+        <View
+          style={{
+            alignItems: 'center',
+            padding: 30,
+          }}
         >
-          <Text style={styles.textStyle}>Sign Up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.handleNavigation('ForgetPassword')}
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.textStyle}>Forget password ?</Text>
-        </TouchableOpacity>
-        <Button title='Display user info' onPress={() => this.displayUser()} />
+          <TouchableOpacity
+            onPress={() => this.handleNavigation('SignIn')}
+            style={styles.buttonStyle}
+          >
+            <Text style={styles.textStyle}>Sign In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.handleNavigation('SignUp')}
+            style={styles.buttonStyle}
+          >
+            <Text style={styles.textStyle}>Sign Up</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.handleNavigation('ForgetPassword')}
+            style={styles.buttonStyle}
+          >
+            <Text style={styles.textStyle}>Forgot password ?</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -123,12 +127,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonStyle: {
-    padding: 20,
+    padding: 5,
   },
   textStyle: {
     fontWeight: 'bold',
     fontSize: 18,
-    padding: 10,
+    padding: 5,
     color: '#fff',
   },
 });

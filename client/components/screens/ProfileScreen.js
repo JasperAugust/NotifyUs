@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 42,
   },
+
   reportsHeading: {
     // flexDirection: 'row',
     flex: 1,
