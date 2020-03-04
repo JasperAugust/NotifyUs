@@ -31,14 +31,16 @@ export default class WelcomeScreen extends React.Component {
         case 'signOut':
           this.setState({ user: null });
           break;
-        case 'customOAuthState':
-          this.setState({ customState: data });
       }
     });
 
     Auth.currentAuthenticatedUser()
       .then(user => this.setState({ user }))
       .catch(() => console.log('Not signed in'));
+  }
+
+  componentWillUnmount() {
+    Hub.remove('auth');
   }
 
   // If FB signIn successful, navigates to AuthLoading screen
