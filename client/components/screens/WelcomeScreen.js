@@ -8,7 +8,7 @@ import {
   Button,
 } from 'react-native';
 
-import { Auth } from 'aws-amplify';
+import { Auth, Hub } from 'aws-amplify';
 const logo = require('../../assets/logo.png');
 
 export default class WelcomeScreen extends React.Component {
@@ -21,15 +21,38 @@ export default class WelcomeScreen extends React.Component {
     await this.props.navigation.navigate(destination);
   };
 
+  componentDidMount() {
+    Hub.listen('auth', ({ payload: { event, data } }) => {
+      switch (event) {
+        case 'signIn':
+          this.setState({ user: data });
+          this.handleNavigation('Authloading');
+          break;
+        case 'signOut':
+          this.setState({ user: null });
+          break;
+        case 'customOAuthState':
+          this.setState({ customState: data });
+      }
+    });
+
+    Auth.currentAuthenticatedUser()
+      .then(user => this.setState({ user }))
+      .catch(() => console.log('Not signed in'));
+  }
+
   // If FB signIn successful, navigates to AuthLoading screen
   loginFacebook = async => {
     Auth.federatedSignIn({ provider: 'Facebook' })
       .then(user => {
+        console.log("I'm getting rendered again");
         this.setState({ user });
-        this.handleNavigation('Authloading');
+        console.log('User saved');
+        // this.handleNavigation('Authloading');
+        console.log('redirected to authloading');
       })
       .catch(err => {
-        // this.handleNavigation('WelcomeScreen');
+        console.log('We have an error bois and girls.');
         console.log(err);
       });
   };
@@ -39,10 +62,9 @@ export default class WelcomeScreen extends React.Component {
     Auth.federatedSignIn({ provider: 'Google' })
       .then(user => {
         this.setState({ user });
-        this.handleNavigation('Authloading');
+        // this.handleNavigation('Authloading');
       })
       .catch(err => {
-        // this.handleNavigation('WelcomeScreen');
         console.log(err);
       });
   };
