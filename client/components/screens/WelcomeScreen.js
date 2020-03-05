@@ -89,12 +89,7 @@ export default class WelcomeScreen extends React.Component {
         >
           <Text style={styles.textStyle}>Log in with Facebook</Text>
         </TouchableOpacity>
-        <View
-          style={{
-            alignItems: 'center',
-            padding: 30,
-          }}
-        >
+        <View style={styles.boxContainer}>
           <TouchableOpacity
             onPress={() => this.handleNavigation('SignIn')}
             style={styles.buttonStyle}
@@ -134,5 +129,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 5,
     color: '#fff',
+  },
+  boxContainer: {
+    alignItems: 'center',
+    padding: 30,
   },
 });

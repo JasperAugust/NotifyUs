@@ -7,20 +7,21 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Font,
 } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { formatRelative, subDays } from 'date-fns';
-import { MaterialIcons } from '@expo/vector-icons';
+
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import uuid from 'uuid';
 import { firebaseApp } from '../../services/config';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { actionCreators } from '../redux/actions.js';
 
 // import axios from '../services/axios'; Change!
 import axios from 'axios';
-
 
 export default class HistoryScreen extends React.Component {
   constructor(props) {
@@ -36,6 +37,9 @@ export default class HistoryScreen extends React.Component {
   }
 
   async componentDidMount() {
+    await Font.loadAsync({
+      MaterialIcons: require('@expo/vector-icons/MaterialIcons.js'),
+    });
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ loading: true, error: null }, this.fetchReports);
@@ -57,7 +61,7 @@ export default class HistoryScreen extends React.Component {
   fetchReports = () => {
     // todo instead of manually replacing the ip, implement middleware
     axios
-      .get('http://192.168.0.46:3000/reports')
+      .get('http://82.0.185.148:3000/reports')
       .then(({ data: reports }) => {
         this.setState({ reports });
         console.log('Report fetching was successful!');
@@ -102,6 +106,34 @@ export default class HistoryScreen extends React.Component {
               label='1 of 6'
             />
           </DataTable>
+          {/* <DataTable>
+            <DataTable.Header>
+              <DataTable.Title>Dessert</DataTable.Title>
+              <DataTable.Title numeric>Calories</DataTable.Title>
+              <DataTable.Title numeric>Fat</DataTable.Title>
+            </DataTable.Header>
+
+            <DataTable.Row>
+              <DataTable.Cell>Frozen yogurt</DataTable.Cell>
+              <DataTable.Cell numeric>159</DataTable.Cell>
+              <DataTable.Cell numeric>6.0</DataTable.Cell>
+            </DataTable.Row>
+
+            <DataTable.Row>
+              <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+              <DataTable.Cell numeric>237</DataTable.Cell>
+              <DataTable.Cell numeric>8.0</DataTable.Cell>
+            </DataTable.Row>
+
+            <DataTable.Pagination
+              page={1}
+              numberOfPages={3}
+              onPageChange={page => {
+                console.log(page);
+              }}
+              label='1-2 of 6'
+            />
+          </DataTable> */}
           <View
             style={{
               flex: 0.5,
@@ -130,7 +162,7 @@ export default class HistoryScreen extends React.Component {
 
   submitReport = () => {
     try {
-      fetch('http://192.168.0.46:3000/reports', {
+      fetch('http://82.0.185.148:3000/reports', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
