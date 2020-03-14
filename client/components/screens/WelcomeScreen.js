@@ -132,6 +132,6 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     alignItems: 'center',
-    padding: 30,
+    // padding: 30,
   },
 });

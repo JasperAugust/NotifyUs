@@ -8,20 +8,31 @@ import {
   TouchableOpacity,
   Alert,
   Font,
+  ScrollView,
 } from 'react-native';
 import { DataTable } from 'react-native-paper';
+import FontAwesome from '../../node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/FontAwesome.js';
+import MaterialIcons from '../../node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/MaterialIcons.js';
+
 import { formatRelative, subDays } from 'date-fns';
 
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import uuid from 'uuid';
 import { firebaseApp } from '../../services/config';
-import { MaterialIcons } from '@expo/vector-icons';
+
+import { Ionicons } from '@expo/vector-icons';
 
 import { actionCreators } from '../redux/actions.js';
 
 // import axios from '../services/axios'; Change!
 import axios from 'axios';
+
+type State = {
+  page: number,
+  sortAscending: boolean,
+  items: Array<{ key: number, name: string, calories: number, fat: number }>,
+};
 
 export default class HistoryScreen extends React.Component {
   constructor(props) {
@@ -33,13 +44,22 @@ export default class HistoryScreen extends React.Component {
       data: [],
       loading: false,
       error: '',
+      page: 0,
+      sortAscending: true,
+      fontLoaded: false,
     };
   }
 
   async componentDidMount() {
-    await Font.loadAsync({
-      MaterialIcons: require('@expo/vector-icons/MaterialIcons.js'),
-    });
+    try {
+      await Font.loadAsync({
+        FontAwesome,
+        'Material Icons': MaterialIcons,
+      });
+      this.setState({ fontLoaded: true });
+    } catch (error) {
+      console.log('error loading icon fonts', error);
+    }
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ loading: true, error: null }, this.fetchReports);
@@ -61,8 +81,9 @@ export default class HistoryScreen extends React.Component {
   fetchReports = () => {
     // todo instead of manually replacing the ip, implement middleware
     axios
-      .get('http://82.0.185.148:3000/reports')
+      .get('http://192.168.0.46:3000/reports')
       .then(({ data: reports }) => {
+        console.log(reports);
         this.setState({ reports });
         console.log('Report fetching was successful!');
       })
@@ -70,10 +91,14 @@ export default class HistoryScreen extends React.Component {
       .finally(() => this.setState({ loading: false }));
   };
   render() {
+    const { sortAscending } = this.state;
+    const itemsPerPage = 2;
+    const from = this.state.page * itemsPerPage;
+    const to = (this.state.page + 1) * itemsPerPage;
     let { image } = this.state;
     return (
       <View style={styles.container}>
-        <View style={styles.reportsHeading}>
+        <View style={styles.table}>
           <DataTable>
             <DataTable.Header>
               <DataTable.Title>Category</DataTable.Title>
@@ -106,34 +131,7 @@ export default class HistoryScreen extends React.Component {
               label='1 of 6'
             />
           </DataTable>
-          {/* <DataTable>
-            <DataTable.Header>
-              <DataTable.Title>Dessert</DataTable.Title>
-              <DataTable.Title numeric>Calories</DataTable.Title>
-              <DataTable.Title numeric>Fat</DataTable.Title>
-            </DataTable.Header>
 
-            <DataTable.Row>
-              <DataTable.Cell>Frozen yogurt</DataTable.Cell>
-              <DataTable.Cell numeric>159</DataTable.Cell>
-              <DataTable.Cell numeric>6.0</DataTable.Cell>
-            </DataTable.Row>
-
-            <DataTable.Row>
-              <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-              <DataTable.Cell numeric>237</DataTable.Cell>
-              <DataTable.Cell numeric>8.0</DataTable.Cell>
-            </DataTable.Row>
-
-            <DataTable.Pagination
-              page={1}
-              numberOfPages={3}
-              onPageChange={page => {
-                console.log(page);
-              }}
-              label='1-2 of 6'
-            />
-          </DataTable> */}
           <View
             style={{
               flex: 0.5,
@@ -162,7 +160,7 @@ export default class HistoryScreen extends React.Component {
 
   submitReport = () => {
     try {
-      fetch('http://82.0.185.148:3000/reports', {
+      fetch('http://192.168.0.46:3000/reports', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -224,7 +222,6 @@ export default class HistoryScreen extends React.Component {
     }
   };
 }
-
 async function uploadImageAsync(uri) {
   // Why using XMLHttpRequest? See:
   // https://github.com/expo/expo/issues/2402#issuecomment-443726662
@@ -258,6 +255,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-start',
+  },
+  table: {
+    paddingTop: 40,
   },
   item: {
     backgroundColor: '#f9c2ff',

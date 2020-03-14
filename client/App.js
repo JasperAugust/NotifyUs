@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Font } from 'react-native';
 import { registerRootComponent } from 'expo';
 
 import { createAppContainer } from 'react-navigation';
