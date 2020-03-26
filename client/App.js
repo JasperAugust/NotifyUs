@@ -5,6 +5,8 @@ import { registerRootComponent } from 'expo';
 import { createAppContainer } from 'react-navigation';
 import { MainNav, topNavigator } from './components/Navigator/Navigator';
 
+import { Provider as PaperProvider } from 'react-native-paper';
+
 import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
@@ -14,9 +16,11 @@ const sentry = require('./services/sentry');
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <AppContainer />
-      </View>
+      <PaperProvider>
+        <View style={{ flex: 1 }}>
+          <AppContainer />
+        </View>
+      </PaperProvider>
     );
   }
 }

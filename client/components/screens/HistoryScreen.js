@@ -51,15 +51,6 @@ export default class HistoryScreen extends React.Component {
   }
 
   async componentDidMount() {
-    try {
-      await Font.loadAsync({
-        FontAwesome,
-        'Material Icons': MaterialIcons,
-      });
-      this.setState({ fontLoaded: true });
-    } catch (error) {
-      console.log('error loading icon fonts', error);
-    }
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ loading: true, error: null }, this.fetchReports);
@@ -91,50 +82,41 @@ export default class HistoryScreen extends React.Component {
       .finally(() => this.setState({ loading: false }));
   };
   render() {
-    const { sortAscending } = this.state;
-    const itemsPerPage = 2;
-    const from = this.state.page * itemsPerPage;
-    const to = (this.state.page + 1) * itemsPerPage;
-    let { image } = this.state;
+    const { image } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.table}>
           <DataTable>
             <DataTable.Header>
-              <DataTable.Title>Category</DataTable.Title>
-              <DataTable.Title right>description</DataTable.Title>
-              <DataTable.Title right>Time</DataTable.Title>
+              <DataTable.Title>Dessert</DataTable.Title>
+              <DataTable.Title numeric>Calories</DataTable.Title>
+              <DataTable.Title numeric>Fat</DataTable.Title>
             </DataTable.Header>
-            {this.state.reports &&
-              this.state.reports.map(report => {
-                return (
-                  <DataTable.Row
-                    key={report._id} // you need a unique key per item
-                    onPress={() => {
-                      console.log(`Selected report of: ${report.username}`);
-                    }}
-                  >
-                    <DataTable.Cell>{report.category}</DataTable.Cell>
-                    <DataTable.Cell>{report.description}</DataTable.Cell>
-                    <DataTable.Cell>
-                      {formatRelative(subDays(new Date(), 3), new Date())}
-                    </DataTable.Cell>
-                  </DataTable.Row>
-                );
-              })}
+
+            <DataTable.Row>
+              <DataTable.Cell>Frozen yogurt</DataTable.Cell>
+              <DataTable.Cell numeric>159</DataTable.Cell>
+              <DataTable.Cell numeric>6.0</DataTable.Cell>
+            </DataTable.Row>
+
+            <DataTable.Row>
+              <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+              <DataTable.Cell numeric>237</DataTable.Cell>
+              <DataTable.Cell numeric>8.0</DataTable.Cell>
+            </DataTable.Row>
+
             <DataTable.Pagination
               page={1}
               numberOfPages={3}
               onPageChange={page => {
                 console.log(page);
               }}
-              label='1 of 6'
+              label='1-2 of 6'
             />
           </DataTable>
-
           <View
             style={{
-              flex: 0.5,
+              // flex: 0.5,
               alignItems: 'center',
               justifyContent: 'center',
             }}
